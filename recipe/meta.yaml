@@ -11,7 +11,7 @@ source:
   sha256: b2921173292e24bf735fb43ee26de33d237aa0d63572825f301ec91843520732
 
 build:
-  number: 0
+  number: 1
   noarch: python
   script: {{ PYTHON }} -m pip install . -vv
 
@@ -29,7 +29,7 @@ test:
 
 about:
   home: https://github.com/elyra-ai/elyra
-  summary: Elyra provides AI Centric extensions to JupyterLab
+  summary: Elyra JupyterLab extension providing support for Code Snippets. Learn more at https://elyra.readthedocs.io/en/stable/user_guide/code-snippets.html
   license: Apache-2.0
   license_file: LICENSE
 
