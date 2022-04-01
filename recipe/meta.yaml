@@ -1,5 +1,5 @@
 {% set name = "elyra-code-snippet-extension" %}
-{% set version = "3.6.1" %}
+{% set version = "3.7.0" %}
 
 
 package:
@@ -8,7 +8,7 @@ package:
 
 source:
   url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/elyra-code-snippet-extension-{{ version }}.tar.gz
-  sha256: e34dc6c2afed3508672570eb3dec41604e59ae39d9bd49865d4ef0d96dfefa5e
+  sha256: 153d24525e733f13f725ef140af1d5eaf2bb068e644d36fa2e50c48cf3ff05f7
 
 build:
   number: 0
@@ -17,10 +17,11 @@ build:
 
 requirements:
   host:
+    - jupyter-packaging
     - pip
     - python >=3.7
   run:
-    - elyra-server ==3.6.0
+    - elyra-server ==3.7.0
     - python >=3.7
 
 test:
