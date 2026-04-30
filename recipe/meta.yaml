@@ -1,5 +1,5 @@
 {% set name = "elyra-code-snippet-extension" %}
-{% set version = "3.15.0" %}
+{% set version = "4.1.0" %}
 
 
 package:
@@ -7,11 +7,11 @@ package:
   version: {{ version }}
 
 source:
-  url: https://pypi.org/packages/source/{{ name[0] }}/{{ name }}/elyra-code-snippet-extension-{{ version }}.tar.gz
-  sha256: 4ab1377d9fa2977656b064ca0e7a6d23b2db0702ce481e3a17210c1c59ad5c6b
+  url: https://pypi.org/packages/source/{{ name[0] }}/{{ name }}/{{ name | replace('-', '_') }}-{{ version }}.tar.gz
+  sha256: 453cc186c96e8d0e9bd6812546380e94061b3774f646e8dccbb2967a48bdf116
 
 build:
-  number: 1
+  number: 0
   noarch: python
   script: {{ PYTHON }} -m pip install . -vv
 
