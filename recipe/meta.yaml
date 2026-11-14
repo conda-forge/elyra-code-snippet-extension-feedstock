@@ -1,5 +1,5 @@
 {% set name = "elyra-code-snippet-extension" %}
-{% set version = "3.15.0" %}
+{% set version = "4.1.0" %}
 
 
 package:
@@ -7,17 +7,17 @@ package:
   version: {{ version }}
 
 source:
-  url: https://pypi.org/packages/source/{{ name[0] }}/{{ name }}/elyra-code-snippet-extension-{{ version }}.tar.gz
-  sha256: 4ab1377d9fa2977656b064ca0e7a6d23b2db0702ce481e3a17210c1c59ad5c6b
+  url: https://pypi.org/packages/source/{{ name[0] }}/{{ name }}/{{ name | replace('-', '_') }}-{{ version }}.tar.gz
+  sha256: 453cc186c96e8d0e9bd6812546380e94061b3774f646e8dccbb2967a48bdf116
 
 build:
-  number: 1
+  number: 0
   noarch: python
   script: {{ PYTHON }} -m pip install . -vv
 
 requirements:
   host:
-    - jupyter-packaging
+    - hatchling
     - pip
     - python {{ python_min }}
   run:
@@ -26,9 +26,17 @@ requirements:
 
 test:
   requires:
+    - pip
     - python {{ python_min }}
   commands:
-    - exit 0
+    # elyra-server leaves out upstream requirements that conda-forge cannot
+    # satisfy yet (see elyra-server-feedstock), so pip check tolerates exactly:
+    #   - jupyterlab-magic-wand, kfp-kubernetes: not packaged on conda-forge
+    #   - kfp: every conda-forge kfp 2.x pins urllib3 <2; elyra needs urllib3 >=2.5
+    #   - faiss-cpu (from jupyter-ai 2.x): conda-forge's faiss-cpu lacks PyPI metadata
+    - pip check 2>&1 | grep -vE "requires (jupyterlab-magic-wand|kfp|kfp-kubernetes|faiss-cpu), which is not installed" | grep -E "which is not installed|has requirement" && exit 1 || true
+    # the package must install its JupyterLab extension (the 4.0.0 sdists shipped none)
+    - test -f "${PREFIX}/share/jupyter/labextensions/@elyra/code-snippet-extension/package.json"
 
 about:
   home: https://github.com/elyra-ai/elyra
